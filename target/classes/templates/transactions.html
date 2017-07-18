@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="/fregments/navBar :: head">
+	<meta charset="windows-1255"></meta>
+	<title id="pageTitle">Transaction</title>
+</head>
+<body>
+	<div th:replace="/fregments/navBar :: userNav">...</div>
+	<div class="container">
+		<table id="cart" class="table table-hover table-condensed">
+    				<thead>
+						<tr>
+							<th >Trans No</th>
+							<th >Date</th>
+							<th >Username</th>
+							<th >Payment Method</th>
+							<th >Total Price</th>
+						
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="transaction : ${transactions}">
+							<td data-th="date" th:text="${transaction.id}">Id</td>
+							<td data-th="date" th:text="${transaction.date}">Date</td>
+							<td data-th="date" th:text="${transaction.userName}">Username</td>
+							<td data-th="date" th:text="${transaction.paymentMethod}">PaymentMethod</td>
+							<td data-th="date" th:text="${transaction.price}">Total Price</td>
+						</tr>
+						
+					</tbody>
+				</table>
+	</div>
+	<div  th:replace="/fregments/navBar :: bootstrapScripts"></div>
+</body>
+</html>

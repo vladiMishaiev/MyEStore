@@ -20,10 +20,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.app.domain.Test;
 import com.app.security.Authorities;
-import com.app.security.Users;
+import com.app.security.MyUser;
+import com.app.service.AuthenticateUserAndSetSessionService;
 import com.app.service.AuthoritiesRepository;
 import com.app.service.UserRepository;
 
@@ -31,17 +30,19 @@ import com.app.service.UserRepository;
 public class LoginController {
 	@Autowired
 	private UserRepository userService;
+	//@Autowired
+    //private AuthenticationManager authenticationManager;
 	@Autowired
-    private AuthenticationManager authenticationManager;
+	private AuthenticateUserAndSetSessionService authService;
 	
 	@RequestMapping(value = {"/","/login"}, method = RequestMethod.GET)
 	public String loginPage(){
-		System.out.println("Login controller executed");
+		//System.out.println("Login controller executed");
 		//check if user already connected - redirect to home page if true
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (principal instanceof UserDetails) {
 			//handle cases with wrong authorisation
-			return "redirect:/home";
+			return "redirect:/products";
 		} else {
 			return "login";
 		}
@@ -51,14 +52,14 @@ public class LoginController {
 		//redirect user to home page if already connected
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (principal instanceof UserDetails)
-			return "redirect:/home";
+			return "redirect:/products";
 		//load new user instance - form object
-		model.addAttribute("user",new Users());
+		model.addAttribute("user",new MyUser());
 		return "signUp";
 	}
 	@RequestMapping(value = {"/signUp"}, method = RequestMethod.POST)
-	public String submitSignUp(@Valid @ModelAttribute Users user,BindingResult result, ModelMap model ,  HttpServletRequest request){
-		System.out.println("post signUp controller executed");
+	public String submitSignUp(@Valid @ModelAttribute MyUser user,BindingResult result, ModelMap model ,  HttpServletRequest request){
+		//System.out.println("post signUp controller executed");
 		model.addAttribute("user",user);
 		if (result.hasErrors()) {
 		    //System.out.println(" * * * * Has Errors");
@@ -67,28 +68,20 @@ public class LoginController {
 			//sign a new user - add ROLE_USER
 			//System.out.println(" * * * * All Good");
 			user.addAuthority("ROLE_USER");
+			user.setDisplayName(user.getUsername());
+			user.setProvider("local");
 			userService.save(user);
-			authenticateUserAndSetSession(user, request);
-	        return "redirect:/home/";
+			//authenticateUserAndSetSession(user, request);
+	        authService.authenticateUserAndSetSession(user, request);
+			return "redirect:/products";
 		}
 	}
 	@RequestMapping("/home")
 	public String homePage(){
-		System.out.println("home controller executed");
+		//System.out.println("home controller executed");
 		return "home";
 	}
 	
-	private void authenticateUserAndSetSession(Users user, HttpServletRequest request) {
-        String username = user.getUsername();
-        String password = user.getPassword();
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
-
-        // generate session if one doesn't exist
-        request.getSession();
-        
-        token.setDetails(new WebAuthenticationDetails(request));
-        Authentication authenticatedUser = authenticationManager.authenticate(token);
-
-        SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
-    }
+	
+	
 }

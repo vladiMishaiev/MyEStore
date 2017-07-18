@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="/fregments/navBar :: head">
+	<meta charset="windows-1255"></meta>
+	<title id="pageTitle">Tickets</title>
+</head>
+<body>
+	<div th:replace="/fregments/navBar :: userNav">...</div>
+	<div class="container">
+		<table class="table table-hover table-condensed">
+    				<thead>
+						<tr>
+							<th >Ticket No</th>
+							<th >Date</th>
+							<th >Username</th>
+							<th >Subject</th>
+							<th >Massage</th>
+						
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="ticket : ${tickets}">
+							<td data-th="date" th:text="${ticket.ticketNum}">Id</td>
+							<td data-th="date" th:text="${ticket.date}">Date</td>
+							<td data-th="date" th:text="${ticket.username}">Username</td>
+							<td data-th="date" th:text="${ticket.subject}">PaymentMethod</td>
+							<td data-th="date" th:text="${ticket.massage}">Total Price</td>
+						</tr>
+						
+					</tbody>
+				</table>
+	</div>
+	<div  th:replace="/fregments/navBar :: bootstrapScripts"></div>
+</body>
+</html>

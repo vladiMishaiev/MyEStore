@@ -18,17 +18,17 @@ import org.springframework.security.core.GrantedAuthority;
 public class Authorities implements GrantedAuthority{
 	private static final long serialVersionUID = 1L;
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name = "user_role_id", unique = true, nullable = false)
+	@Column(name = "user_role_id", unique = true, nullable = true)
 	private int userId;
 	@Column(name = "authority", nullable = false)
 	private String authority;
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "username", nullable = false)
-	private Users user;
+	@JoinColumn(name = "username", nullable = true)
+	private MyUser user;
 	
 	public Authorities(){}
 	
-	public Authorities (String authority,Users user){
+	public Authorities (String authority,MyUser user){
 		this.authority=authority;
 		this.user=user;
 	}

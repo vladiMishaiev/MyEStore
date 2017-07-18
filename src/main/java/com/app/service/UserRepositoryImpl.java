@@ -7,28 +7,32 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import com.app.security.Users;
+import com.app.security.MyUser;
 @Repository
 @Transactional(readOnly = true)
 public class UserRepositoryImpl implements UserRepositoryCustom{
 	@Autowired
     private SessionFactory sessionFactory;
-	
+	@Autowired
+	private SupportUserService userRepo;
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Users user = null;
+		return userRepo.findOne(username);
+		/*MyUser user = null;
 		Session session = null;
 		try {
 			session = sessionFactory.openSession();
 			session.beginTransaction();
-			user = (Users) session.get(Users.class,username);
+			user = (MyUser) session.get(MyUser.class,username);
 			user.getAuthorities().size();
+			System.err.println("before comit");
 			session.getTransaction().commit();
+			System.err.println("Got user :  " + user);
 		} catch (Exception e) {
 			e.getMessage();
 		} finally {
 			session.close();
 		}
-		return user;
+		return user;*/
 	}
 }

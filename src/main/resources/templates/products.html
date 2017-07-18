@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="/fregments/navBar :: head">
+	<meta charset="windows-1255"></meta>
+	<title id="pageTitle">Products</title>
+</head>
+<body>
+	<div th:replace="/fregments/navBar :: userNav">...</div>
+	<div class="container" id="tourpackages-carousel">
+		<h2>This is the place for a filter</h2>
+		<div><a href="#" th:href="@{'products/addNewProduct'}" class="btn btn-warning" sec:authorize="hasAuthority('ROLE_ADMIN')"><span class="glyphicon glyphicon-plus"></span>Add New Product</a></div>
+			<div class="col-xs-18 col-sm-6 col-md-3"  th:each="product : ${products}">
+				<div class="thumbnail">
+				<h4 th:text="${product.country}">My title</h4>
+					<img src="images/koPiPi.jpg" th:src="${product.imgUrl}" alt="" height="137px"/>
+					<div class="caption">
+						<h4 th:text="${product.title}">My title</h4>
+						<label th:text="${product.price}"></label>$
+						<p>
+							<a href="#" th:href="@{'cart/'+${product.dealNum}}" class="btn btn-info btn-xs" role="button">Add to Cart</a>
+							<a href="#" th:href="@{'products/'+${product.dealNum}}" class="btn btn-default btn-xs" role="button">MoreInfo</a>
+							<a href="#" th:href="@{'products/'+${product.dealNum}+'/remove'}" class="btn btn-danger btn-xs" sec:authorize="hasAuthority('ROLE_ADMIN')"><span class="glyphicon glyphicon-remove"></span>Remove</a>
+						</p>
+					</div>
+				</div>
+			</div>
+	</div>
+<div  th:replace="/fregments/navBar :: bootstrapScripts"></div>
+
+</body>
+</html>

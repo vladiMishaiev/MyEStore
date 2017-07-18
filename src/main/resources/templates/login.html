@@ -1,65 +1,80 @@
 <!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="windows-1255"></meta>
-<title>Login Page</title>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	crossorigin="anonymous" />
-
-<!-- Optional theme -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-	crossorigin="anonymous" />
-
-<!-- Latest compiled and minified JavaScript -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-	crossorigin="anonymous"></script>
-
-<link rel="stylesheet" type="text/css" th:href="@{css/test.css}" />
-
+<head th:include="/fregments/navBar :: head">
+	<meta charset="windows-1255"></meta>
+	<title id="pageTitle">Login Page</title>
 </head>
 <body>
-	<ul class="nav nav-tabs">
-		<li role="presentation" class="active"><a href="#">My App</a></li>
-		<li role="presentation"><a href="/login">Login</a></li>
-		<li role="presentation"><a href="/signUp">SignUp</a></li>
-	</ul>
+	<div th:replace="/fregments/navBar :: publicNav">Nav bar fragment</div>
 	<div class="container">
-		<h1>This is a login page</h1>
-		<div>
-			<p th:if="${loginError}" class="error">Wrong user or password</p>
-			<form th:action="@{/login}" method="post">
-				<label for="username">Username :</label> <input type="text"
-					id="username" name="username" autofocus="autofocus" /> <br /> <label
-					for="password">Password :</label> <input type="password"
-					id="password" name="password" /> <br /> <input type="submit"
-					value="Log in" />
-			</form>
-		</div>
-		<br/><br/><br/>
-		<div class="col-sm-12">
-			<form action="/signin/facebook" method="POST">
-				<input type="hidden" name="scope" value="public_profile" /> <input
-					type="submit" value="Login using Facebook" class="btn btn-primary" />
-			</form>
-		</div>
-		<br/>
-		<div class="col-sm-12">
-			<form action="/signin/facebook" method="POST">
-				<input type="hidden" name="scope" value="public_profile" /> <input
-					type="submit" value="Login using Google" class="btn btn-danger" />
+		<div class="omb_login">
+			<h2 class="omb_authTitle">Login or Sign up</h2>
+
+			<!-- Social login -->
+			<div class="row omb_row-sm-offset-3 omb_socialButtons">
+				<div class="btn-group col-xs-4 col-sm-2">
+					<form action="/connect/facebook" method="POST">
+						<input type="hidden" name="scope" value="user_posts, email" />
+						<button type="submit" class="btn btn-facebook" style="width:183px"> <i class="fa fa-facebook"></i> | Connect with Facebook</button>
+					</form>
+				</div>
+
+				<div class="col-xs-4 col-sm-2 btn-group">
+					<form action="/connect/google" method="POST">
+						<input type="hidden" name="scope" value="https://www.googleapis.com/auth/userinfo.email" />
+						<button type="submit" class="btn btn-google-plus" style="width:175px"> <i class="fa fa-google"></i> | Connect with Google</button>
+					</form>
+				</div>
 				
-			</form>
+				<div class="col-xs-4 col-sm-2 btn-group">
+						<form action="/connect/linkedin" method="POST">
+							<input type="hidden" name="scope" value="r_basicprofile,r_emailaddress" />
+							<button type="submit" class="btn btn-linkedin" style="width:180px"> <i class="fa fa-linkedin"></i> | Connect with LinkedIn</button>
+						</form>
+				</div>
+			</div>
+
+			<div class="row omb_row-sm-offset-3 omb_loginOr">
+				<div class="col-xs-12 col-sm-6">
+					<hr class="omb_hrOr" />
+					<span class="omb_spanOr">or</span>
+				</div>
+			</div>
+
+			<!-- Local login -->
+			<div class="row omb_row-sm-offset-3">
+				<div class="col-xs-12 col-sm-6">
+					<p th:if="${loginError}" class="error">Wrong user or password</p>
+					<form class="omb_loginForm" th:action="@{/login}" autocomplete="off" method="POST">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-user"></i></span>
+							<input type="text" class="form-control" id="username" name="username" placeholder="Username" />
+						</div>
+						<span class="help-block"></span>
+
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+							<input type="password" class="form-control" id="password" name="password" placeholder="Password" />
+						</div>
+						<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+					</form>
+				</div>
+			</div>
+			<div class="row omb_row-sm-offset-3">
+				<div class="col-xs-12 col-sm-3">
+					<label class="checkbox"> <input type="checkbox"
+						value="remember-me" />Remember Me
+					</label>
+				</div>
+				<div class="col-xs-12 col-sm-3">
+					<p class="omb_forgotPwd">
+						<a href="#">Forgot password?</a>
+					</p>
+				</div>
+			</div>
 		</div>
 	</div>
 
-	
 </body>
 </html>

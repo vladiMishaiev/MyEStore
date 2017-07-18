@@ -27,5 +27,8 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/vladi/workspace/MyEStore/spring-social-config-2.0.0.M2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/vladi/workspace/MyEStore/spring-social-core-2.0.0.M2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/vladi/workspace/MyEStore/spring-social-facebook-3.0.0.M1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
