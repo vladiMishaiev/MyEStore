@@ -4,9 +4,9 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
-@EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class,
-		HibernateJpaAutoConfiguration.class,
-		DataSourceTransactionManagerAutoConfiguration.class })
+//@EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class,
+//		HibernateJpaAutoConfiguration.class,
+//		DataSourceTransactionManagerAutoConfiguration.class })
 @EnableAutoConfiguration
 @SpringBootApplication
 public class MyEStoreApplication {
